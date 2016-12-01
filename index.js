@@ -72,7 +72,7 @@ app.post('/options', function (req, res) {
 			break;
 		case "install":
 			//Installing APK.
-			var string = run("ping -n 1 google.com");
+			var string = run("adb -s " + choosenDevice + " install files/" + req.body.apkname);
 			res.send(string);
 			break;
 		case "fastboot":
@@ -108,6 +108,20 @@ app.post('/options', function (req, res) {
 				}
 			}
 			res.send(string);
+			break;
+		case "getapks":
+		//Get build.prop from device 
+			var pr = getFiles("apk");
+			var string = "";
+			if (pr.length === 0 || !pr){
+				string = "For some reason, I cannot get a list of files. Please see console for more details (if any).";
+			} else {
+				for(var i = 0; i < pr.length; ++i){
+					string += '<tr><td><a href="#" onclick="installAPK(\'' + pr[i] + '\')">' + pr[i] + "</a></td></tr>";
+				}
+			}
+			res.send(string);
+			break;
 		case "custom":
 		//Ohhhh nice, custom commands :D
 			var string = "";
@@ -162,6 +176,7 @@ app.listen(8080, function () {
 
 //Runs a given command via console.
 function run(command){
+	console.log("RUNNING: " + command);
 	var result = exec(command, (error, stdout, stderr) => {
 		var string = "";
 	if (error) {
@@ -245,6 +260,20 @@ function getBuildProp(){
 	var newString = string.replace(/\r/g, "");
 	var props = newString.split("\n");
 	return props;
+}
+function getFiles(filetype){
+	console.log("Getting list of apks from folder");
+	var files = fs.readdirSync("files/");
+	var f = [];
+	for(var i = 0; i < files.length; i++){
+			var temp = files[i].split(".");
+			if(temp[temp.length - 1] == filetype){
+				f.push(files[i]);
+			} else if (filetype === null) {
+				f.push(files[i]);
+			}
+	}
+	return f;
 }
 //Prototypes:
 Array.prototype.clean = function(deleteValue) {

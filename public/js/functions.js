@@ -126,6 +126,24 @@ function reboot(type){
 			load(false);
 		});
 }
+function installAPK(filename){
+	load(true);
+	$.ajax({
+		method:'post',
+		url:'../options',
+		data:{
+			tool:"install",
+			apkname:filename
+		},
+		success:function(result) {
+			genModal("Command Result", "<pre>" + result + "</pre>");
+			load(false);
+		}
+		}).fail(function(e) {
+			genModal("Error", "<pre>" + e.Message + "</pre>");
+			load(false);
+		});
+}
 function getProp(){
 	if(document.getElementById("page-wrapper").innerHTML == "You must first select a device in the Dashboard!"){
 		return; //Do not continue because a device is not selected. lol
@@ -140,6 +158,27 @@ function getProp(){
 		success:function(result) {
 			//genModal("Command Result", "<pre>" + result + "</pre>");
 			document.getElementById("prop").innerHTML = result;
+			load(false);
+		}
+		}).fail(function(e) {
+			genModal("Error", "<pre>" + e.Message + "</pre>");
+			load(false);
+		});
+}
+function getAPKS(){
+	if(document.getElementById("page-wrapper").innerHTML == "You must first select a device in the Dashboard!"){
+		return; //Do not continue because a device is not selected. lol
+	}
+	load(true);
+	$.ajax({
+		method:'post',
+		url:'../options',
+		data:{
+			tool:"getapks"
+		},
+		success:function(result) {
+			//genModal("Command Result", "<pre>" + result + "</pre>");
+			document.getElementById("apks").innerHTML = result;
 			load(false);
 		}
 		}).fail(function(e) {
