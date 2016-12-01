@@ -14,6 +14,13 @@ It has many features including, but not limited to:
 - Gather device information
 - Custom Commands can be sent
 
+## Warnings
+
+- This software is NOT meant to be internet facing, do not open port 8080 on your computer and router while running this software.
+- This software is a web app that runs on your computer. It DOES NOT HAVE AN AUTHENTICATION MECHANISM. 
+- Anything done in adb shell can result in a soft brick. (Whether in ADBWUI, using ADB.exe, etc)
+- This software is extremely beta - it may or may not have a ton of bugs.
+
 ## Installing ADBWUI
 
 Installing ADBWUI is fairly simple:
