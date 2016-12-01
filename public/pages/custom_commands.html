@@ -1,0 +1,14 @@
+<div class="row">
+	<div class="page-header"><h1>Send Custom ADB / Fastboot Command</h1></div>
+</div>
+<div class="row">
+	<div class="col-lg-6">
+		<p>Select which type of command to send:</p>
+		<select id="type"class="form-control">
+			<option value="adb">ADB</option>
+			<option value="fastboot">Fastboot</option>
+		</select><br />
+		<input type="text" class="form-control" id="command" placeholder="put command here (Minus the words 'adb' or 'fastboot')"><br/>
+		<button class="btn btn-sm btn-info" onclick="customCommand()">Run Command</button>
+	</div>
+</div>
