@@ -88,8 +88,8 @@ app.post('/options', function (req, res) {
 			//run command
 			if(command == "wipe system"){
 				if(state == "recovery"){
-					var string = run("adb shell twrp wipe system");
-					string += "\r\n" + run("adb shell twrp wipe data");
+					var string = run("adb shell -s " + choosenDevice + " twrp wipe system");
+					string += "\r\n" + run("adb shell -s " + choosenDevice + " twrp wipe data");
 					res.send(string);
 				} else if(state !== "recovery"){
 					res.send("Device is not in recovery mode, please reboot into recovery and try again.");
@@ -99,7 +99,7 @@ app.post('/options', function (req, res) {
 			} else {
 				var state = getDeviceState(choosenDevice);
 				if(state == "recovery"){
-					var string = run("adb shell twrp " + command);
+					var string = run("adb shell -s " + choosenDevice + " twrp " + command);
 					res.send(string);
 				} else if(state !== "recovery"){
 					res.send("Device is not in recovery mode, please reboot into recovery and try again.");
