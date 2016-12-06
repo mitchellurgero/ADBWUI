@@ -86,14 +86,26 @@ app.post('/options', function (req, res) {
 		//Also obvious.
 			var command = req.body.com;
 			//run command
-			var state = getDeviceState(choosenDevice);
-			if(state == "recovery"){
-				var string = run("twrp " + command);
-				res.send(string);
-			} else if(state !== "recovery"){
-				res.send("Device is not in recovery mode, please reboot into recovery and try again.");
+			if(command == "wipe system"){
+				if(state == "recovery"){
+					var string = run("adb shell twrp wipe system");
+					string += run("adb shell twrp wipe data");
+					res.send(string);
+				} else if(state !== "recovery"){
+					res.send("Device is not in recovery mode, please reboot into recovery and try again.");
+				} else {
+					res.send("There was an issue running the command. Is the device plugged in?");
+				}
 			} else {
-				res.send("There was an issue running the command. Is the device plugged in?");
+				var state = getDeviceState(choosenDevice);
+				if(state == "recovery"){
+					var string = run("adb shell twrp " + command);
+					res.send(string);
+				} else if(state !== "recovery"){
+					res.send("Device is not in recovery mode, please reboot into recovery and try again.");
+				} else {
+					res.send("There was an issue running the command. Is the device plugged in?");
+				}
 			}
 			break;
 		case "prop":
@@ -152,6 +164,10 @@ app.post('/options', function (req, res) {
 			var devs = parseDevices();
 			//console.info(devs);
 			var string = "";
+			if(devs === false){
+				res.send("ADB was not found on this computer, please install it!");
+				break;
+			}
 			if (devs.length === 0 || !devs){
 				string = "No devices currently connected!";
 			} else {
@@ -182,6 +198,7 @@ function run(command){
 	if (error) {
 		//console.error(`exec error: ${error}`);
 		string += "ERROR, CHECK CONSOLE\r\n" + error;
+		return false;
 	}
 	if(stderr !== ""){
 		return stderr + "\r\n" + stdout;

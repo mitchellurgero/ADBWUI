@@ -186,6 +186,25 @@ function getAPKS(){
 			load(false);
 		});
 }
+function twrpCom(command){
+	load(true);
+	$.ajax({
+		method:'post',
+		url:'../options',
+		data:{
+			tool:"recovery",
+			com: command
+		},
+		success:function(result) {
+			genModal("Command Result", "<pre>" + result + "</pre>");
+			//document.getElementById("apks").innerHTML = result;
+			load(false);
+		}
+		}).fail(function(e) {
+			genModal("Error", "<pre>" + e.Message + "</pre>");
+			load(false);
+		});
+}
 function genModal(head, body){
 	document.getElementById("genModalHeader").innerHTML = head;
 	document.getElementById("genModalBody").innerHTML = body;
