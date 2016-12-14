@@ -15,9 +15,10 @@
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			document.getElementById("page-wrapper").innerHTML = "Loading the page failed. Please try again.";
 			genModal("Error", "Loading the page failed. Please try again.");
-			load(false);
+			
 		});
 }
 function load(type){
@@ -46,6 +47,7 @@ function getDevices(){
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			document.getElementById("devices").innerHTML = "Loading the devices failed. Please try again.";
 			genModal("Error", "<pre>" + e.toString() + "</pre>");
 			load(false);
@@ -65,6 +67,7 @@ function installAPK(){
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			genModal("Error", "<pre>" + e.toString() + "</pre>");
 			load(false);
 		});
@@ -84,6 +87,7 @@ function setDevice(serialno){
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			genModal("Error", "<pre>" + e.toString() + "</pre>");
 			load(false);
 		});
@@ -104,6 +108,7 @@ function customCommand(){
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			genModal("Error", "<pre>" + e.Message + "</pre>");
 			load(false);
 		});
@@ -122,6 +127,7 @@ function reboot(type){
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			genModal("Error", "<pre>" + e.Message + "</pre>");
 			load(false);
 		});
@@ -140,6 +146,7 @@ function installAPK(filename){
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			genModal("Error", "<pre>" + e.Message + "</pre>");
 			load(false);
 		});
@@ -161,6 +168,7 @@ function getProp(){
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			genModal("Error", "<pre>" + e.Message + "</pre>");
 			load(false);
 		});
@@ -182,6 +190,7 @@ function getAPKS(){
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			genModal("Error", "<pre>" + e.Message + "</pre>");
 			load(false);
 		});
@@ -201,6 +210,7 @@ function twrpCom(command){
 			load(false);
 		}
 		}).fail(function(e) {
+			load(false);
 			genModal("Error", "<pre>" + e.Message + "</pre>");
 			load(false);
 		});
@@ -209,4 +219,5 @@ function genModal(head, body){
 	document.getElementById("genModalHeader").innerHTML = head;
 	document.getElementById("genModalBody").innerHTML = body;
 	$("#genModal").modal('show');
+	load(false);
 }
