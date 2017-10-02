@@ -27,7 +27,8 @@ app.use('/', express.static('public'));
 var cpUpload = upload.fields([{ name: 'file', maxCount: 1 }])
 app.post('/upload', cpUpload, function (req, res, next) {
 	console.log(req.files['file']);
-	res.send('<html><head><meta http-equiv="refresh" content="3; url=index.html" /></head><body><br><br><center><h3>Upload complete!</h3><br><a href="index.html">Click here if your browser does not automatically redirect you.</a></center></body></html>');
+	//console.log(path.basename(req.files.file.path));
+	res.send('<html><head><meta http-equiv="refresh" content="1; url=index.html" /></head><body><br><br><center><h3>Upload complete!</h3><br><a href="index.html">Click here if your browser does not automatically redirect you.</a></center></body></html>');
 })
 
 //for commands / tools
